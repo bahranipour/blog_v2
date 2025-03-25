@@ -1,0 +1,58 @@
+{% load blog_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <title>{% block title %}{% endblock title %}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark text-right">
+        <a href="{% url 'blog:post_list' %}" class="navbar-brand">وبلاگ من</a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="myNav">
+            <ul class="navbar-nav text-right">
+                <li class="nav-item active"><a href="{% url 'blog:post_list' %}" class="nav-link active">خانه</a></li>
+                <li class="nav-item active"><a href="{% url 'blog:about' %}" class="nav-link active">دربار من</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row mt-2">
+            <div class="col-md-3 text-center ">
+                <p class="bg-warning p-2">مجموع پست ها: {% total_posts %}</p>
+                {% show_categories %}
+                <hr>
+                {% show_latest_posts 5 %}
+            </div>
+            <div class="col-md-9">
+                {% if messages %}
+                {% for message in messages %}
+                  <div id="message" class="container">
+                    <div class="alert alert-{{ message.tags }} alert-dismissible text-center" role="alert">
+                      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+                      
+                      {{ message }}
+                    </div>
+                  </div>
+                {% endfor %}
+              {% endif %}
+                {% block content %}{% endblock content %}
+            </div>
+        </div>
+    </div>
+ 
+
+</body>
+</html>

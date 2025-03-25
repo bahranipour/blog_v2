@@ -1,0 +1,6 @@
+<div class="list-group text-center">
+    <a href="#" class="list-group-item disabled text-dark">دسته ها</a>
+    {% for category in categories %}
+        <a href="{% url 'blog:post_by_category' category.id %}" class="list-group-item">{{category.title}}</a>
+    {% endfor %}
+</div>

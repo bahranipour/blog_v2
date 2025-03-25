@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Share a post{% endblock title %}
+{% block content %}
+    {% if sent %}
+        <div class="alert alert-success text-center mt-2">ایمیل با موفقیت ارسال شد <a href="{% url 'blog:post_list' %}" class="btn btn-danger">بازگشت</a></div>
+    {% else %}
+        <div class="row mt-3">
+            <div class="col-md-6 col-sm-10 mx-auto">
+                <div class="card" dir="rtl">
+                    <div class="card-header bg-primary text-center text-white">
+                        <h4>اشتراک گذاری پست</h4>
+                    </div>
+                    <div class="card-body text-right">
+                        <p class="text-center">پست <span class="text-danger">{{post.title}}</span> را با دیگران به اشتراک بگذارید</p>
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form|crispy}}
+                            <input type="submit" value="ارسال ایمیل" class="btn btn-warning">
+                            <a href="{% url 'blog:post_detail' post.id %}" class="btn btn-dark float-left">بازگشت</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <br><br>
+{% endblock content %}
